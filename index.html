@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation</title>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
+    <style>
+        /* Make the body and html take up the full height */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        /* Flexbox layout to push footer to the bottom */
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1; /* Fills the remaining space above the footer */
+        }
+
+        footer {
+            text-align: left;
+            padding: 1rem;
+        }
+
+        /* Additional styling for the page */
+        code {
+            background-color: #f1f3f5;
+            padding: 0.2em 0.4em;
+            border-radius: 0.2em;
+        }
+
+        pre {
+            background-color: #f1f3f5;
+            padding: 1em;
+            border-radius: 0.5em;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <header class="container">
+        <h1>Tictac Documentation</h1>
+        <p>A simple guide to using this project, styled with PicoCSS.</p>
+    </header>
+
+    <main class="container">
+        <section>
+            <h2>Introduction</h2>
+            <p>This project is a simple demonstration of using PicoCSS for creating lightweight, responsive, and beautiful user interfaces.</p>
+        </section>
+
+        <section>
+            <h2>Getting Started</h2>
+            <p>To get started, include PicoCSS in your HTML document as follows:</p>
+            <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css"&gt;</code></pre>
+            <p>Once you have included the stylesheet, your page will automatically adopt a clean and minimal style.</p>
+        </section>
+
+        <section>
+            <h2>Usage</h2>
+            <p>Below are some examples of commonly used HTML elements and how they are styled by PicoCSS:</p>
+
+            <h3>Buttons</h3>
+            <button>Primary Button</button>
+            <button class="secondary">Secondary Button</button>
+
+            <h3>Job table</h3>
+            <table role="grid">
+                <thead>
+                    <tr>
+                        <th>Job ID</th>
+                        <th>Process ID</th>
+                        <th>Job Name</th>
+                        <th>Command</th>
+                        <th>Created At</th>
+                        <th>Finnished At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>1</th>
+                        <th>23432</th>
+                        <th>test_job</th>
+                        <th>sleep 10</th>
+                        <th>2006-01-02 15:04:05</th>
+                        <th>2006-01-02 15:04:15</th>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Usage</h2>
+            <pre><code>tictac --add command</code></pre>
+        </section>
+
+    </main>
+
+    <footer class="container">
+        <p>&copy; 2024 Tictac</p>
+    </footer>
+</body>
+</html>
