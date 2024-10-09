@@ -8,7 +8,7 @@ Building a scheduler in Go
 
 - [ ] Create the queues
 
-- [ ] Document and create the page
+- [x] Document and create the page
 
 - [ ] Create the installation script
 
