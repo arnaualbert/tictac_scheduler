@@ -12,6 +12,7 @@ Building a scheduler in Go
 
 - [ ] Create the installation script
 
+- [ ] Add job owner to the stuct and db
 
 # Stack:
 
