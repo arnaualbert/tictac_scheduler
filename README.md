@@ -2,7 +2,7 @@
 
 Building a scheduler in Go
 
-# TODO
+# TODO:
 
 - [ ] Make it a CLI tool
 
@@ -19,7 +19,7 @@ Building a scheduler in Go
 - Go
 - Sqlite
 
-# Job info
+# Job info:
 
 - Id is a random integer
 
