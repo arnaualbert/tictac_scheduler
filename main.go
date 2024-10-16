@@ -93,17 +93,23 @@ func (j Job) Update(id int) error {
 	return nil
 }
 
+func CancelJob() {
+	// TODO: Cancel the job by the job id/job name still pending to decide
+	fmt.Println("Canceling job")
+
+}
+
 func main() {
 	fmt.Println("Welcome to TicTac job manager")
 	fmt.Print(time.Now().Format("02-01-2006 15:04:05 Monday\n"))
 	job := Job{
 		Id:          1,
 		Name:        "test",
-		Command:     "ls",
+		Command:     "sleep 10",
 		CreatedAt:   time.Now().Format("2006-01-02 15:04:05"),
 		FinnishedAt: "",
 	}
-	cmd := exec.Command("/bin/bash", "-c", fmt.Sprintf("sleep 10; sqlite3 jobs.db 'UPDATE job SET FINNISHED_AT = CURRENT_TIMESTAMP WHERE id = %d;'", job.Id))
+	cmd := exec.Command("/bin/bash", "-c", fmt.Sprintf("%s; sqlite3 jobs.db 'UPDATE job SET FINNISHED_AT = CURRENT_TIMESTAMP WHERE id = %d;'", job.Command, job.Id))
 	cmd.Stdout = os.Stdout
 	if err := cmd.Start(); err != nil { // run in the background
 		log.Fatal(err)
