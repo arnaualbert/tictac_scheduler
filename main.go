@@ -3,12 +3,12 @@ package main
 import (
 	"database/sql"
 	"errors"
+	"flag"
 	"fmt"
 	"log"
 	"math/rand/v2"
 	"os"
 	"os/exec"
-	"strings"
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -106,11 +106,24 @@ func CancelJob(jobId int) {
 
 func main() {
 	fmt.Println("Welcome to TicTac job manager")
+	jobName := flag.String("job_name", "test_job", "Name of the job")
+	commandPtr := flag.String("add_job", "", "Add a new job")
+	flag.Parse()
+	if *commandPtr == "" {
+		fmt.Println("Please provide a command with -add_job")
+		return
+	}
+
+	if *jobName == "" {
+		fmt.Println("Please provide a job name with -job_name")
+		return
+	}
+
 	fmt.Print(time.Now().Format("02-01-2006 15:04:05 Monday\n"))
 	job := Job{
 		Id:          rand.IntN(100),
-		Name:        "sewss1t",
-		Command:     strings.Join(os.Args[1:], " "),
+		Name:        *jobName,
+		Command:     *commandPtr,
 		CreatedAt:   time.Now().Format("2006-01-02 15:04:05"),
 		FinnishedAt: "",
 	}
