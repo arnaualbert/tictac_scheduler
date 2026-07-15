@@ -149,7 +149,7 @@ func CancelJob(jobId int) {
 func ListJobs() {
 	db := GetConnection()
 	rows, err := db.Query("SELECT ID, PROCESS_ID, NAME, COMMAND, CREATED_AT, FINNISHED_AT FROM job")
-	if err != nil {
+	if rows.Err() != nil {
 		log.Fatalf("Failed to fetch jobs: %v", err)
 	}
 	defer rows.Close()
