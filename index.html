@@ -50,10 +50,11 @@
     <main class="container">
         <section>
             <h2>Introduction</h2>
-            <p>This project is a very simple job manager made with go, it's used to submit task and check their status.</p>
+            <p>This project is a lightweight, concurrent background job manager written in Go. It allows you to submit tasks to execute asynchronously in the background, monitor their execution status, and safely terminate running processes using a local SQLite instance for state persistence.</p>
         </section>
+        
         <section>
-            <h3>To do</h3>
+            <h3>Project Roadmap</h3>
             <fieldset>
                 <label>
                   <input type="checkbox" name="init-project" checked disabled/>
@@ -64,41 +65,65 @@
                   Document and create the page
                 </label>
                 <label>
-                  <input type="checkbox" name="create-cli" disabled/>
+                  <input type="checkbox" name="create-cli" checked disabled/>
                   Make the CLI
                 </label>
                 <label>
                   <input type="checkbox" name="create-queues" disabled/>
-                  Create the queues
+                  Create the queues (Immediate execution is currently used)
                 </label>
               </fieldset>
         </section>
+
         <section>
             <h3>Stack</h3>
-            <li>Go</li>
-            <li>Sqlite</li>
+            <ul>
+                <li><strong>Go:</strong> Core language, utilizes <code>os/exec</code> for process control and Go-routines.</li>
+                <li><strong>Sqlite (go-sqlite3):</strong> Embedded relational database to track and audit job life cycles.</li>
+            </ul>
         </section>
+
         <section>
-            <h3>Job table</h3>
+            <h3>Job Table Schema</h3>
+            <p>Database table name: <code>job</code> inside local SQLite db (<code>jobs.db</code>).</p>
             <table role="grid">
                 <thead>
                     <tr>
-                        <th>Job ID</th>
-                        <th>Process ID</th>
-                        <th>Job Name</th>
-                        <th>Command</th>
-                        <th>Created At</th>
-                        <th>Finnished At</th>
+                        <th>Column Name</th>
+                        <th>Type</th>
+                        <th>Description</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th>1</th>
-                        <th>23432</th>
-                        <th>test_job</th>
-                        <th>sleep 10</th>
-                        <th>2006-01-02 15:04:05</th>
-                        <th>2006-01-02 15:04:15</th>
+                        <td><code>ID</code></td>
+                        <td>INTEGER (Primary Key)</td>
+                        <td>A randomized unique identifier.</td>
+                    </tr>
+                    <tr>
+                        <td><code>PROCESS_ID</code></td>
+                        <td>INTEGER</td>
+                        <td>The OS Process ID (PID) of the executed job.</td>
+                    </tr>
+                    <tr>
+                        <td><code>NAME</code></td>
+                        <td>TEXT</td>
+                        <td>Human-readable label for the job.</td>
+                    </tr>
+                    <tr>
+                        <td><code>COMMAND</code></td>
+                        <td>TEXT</td>
+                        <td>The actual bash script/command executed.</td>
+                    </tr>
+                    <tr>
+                        <td><code>CREATED_AT</code></td>
+                        <td>TEXT</td>
+                        <td>Timestamp when the job started (formatted as <code>YYYY-MM-DD HH:MM:SS</code>).</td>
+                    </tr>
+                    <tr>
+                        <td><code>FINNISHED_AT</code></td>
+                        <td>TEXT</td>
+                        <td>Timestamp of completion, or <code>"RUNNING"</code> if active.</td>
                     </tr>
                 </tbody>
             </table>
@@ -106,13 +131,25 @@
 
         <section>
             <h2>Usage</h2>
-            <pre><code>tictac --add command</code></pre>
+            <p>Run the manager directly with Go CLI flags. Supported options:</p>
+            
+            <h3>1. Add a Background Job</h3>
+            <p>Spawns a command detached from terminal output and registers it with a random ID:</p>
+            <pre><code>go run main.go -add_job "sleep 10" -job_name "MySleepJob"</code></pre>
+
+            <h3>2. List All Jobs</h3>
+            <p>Prints an active, formatted audit trail of all registered tasks:</p>
+            <pre><code>go run main.go -list</code></pre>
+
+            <h3>3. Cancel a Job</h3>
+            <p>Sends a <code>SIGKILL</code> signal directly to the underlying system process ID and marks it as completed:</p>
+            <pre><code>go run main.go -cancel &lt;job_id&gt;</code></pre>
         </section>
 
     </main>
 
     <footer class="container">
-        <p>&copy; 2024 Tictac</p>
+        <p>&copy; 2026 Tictac</p>
     </footer>
 </body>
 </html>
